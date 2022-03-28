@@ -42,52 +42,65 @@ const EventForm = () => {
       // @ts-ignore
       fetch(`${API}Events`, requestOptions)
         .then(response => response.json())
-        // .then(data => setPostId(data.id));
+      // .then(data => setPostId(data.id));
       alert(JSON.stringify(values, null, 2));
     },
   });
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <label htmlFor="organizerName">Organizer name</label>
-      <input
-        id="organizerName"
-        onChange={formik.handleChange}
-        value={formik.values.organizerName}
-      />
-      <label htmlFor="organizerEmail">Organizer email</label>
-      <input
-        id="organizerEmail"
-        type="email"
-        onChange={formik.handleChange}
-        value={formik.values.organizerEmail}
-      />
-      <label htmlFor="eventName">Event name</label>
-      <input
-        id="eventName"
-        type="eventName"
-        onChange={formik.handleChange}
-        value={formik.values.eventName}
-      />
-      <label htmlFor="eventName">Data zakończenia</label>
-      <DatePicker
-        selected={formik.values.endDate}
-        onChange={date => formik.setFieldValue('endDate', date)}
-      />
-      <label htmlFor="eventName">Budget</label>
-      <input
-        id="budget"
-        type="number"
-        min={0}
-        onChange={formik.handleChange}
-        value={formik.values.budget}
-      />
-      <label htmlFor="message">Message</label>
-      <textarea
-        id="message"
-        onChange={formik.handleChange}
-        value={formik.values.message}
-      />
+      <div>
+        <label htmlFor="organizerName">Organizer name</label>
+        <input
+          id="organizerName"
+          onChange={formik.handleChange}
+          value={formik.values.organizerName}
+        />
+      </div>
+      <div>
+        <label htmlFor="organizerEmail">Organizer email</label>
+        <input
+          id="organizerEmail"
+          type="email"
+          onChange={formik.handleChange}
+          value={formik.values.organizerEmail}
+        />
+      </div>
+      <div>
+        <label htmlFor="eventName">Event name</label>
+        <input
+          id="eventName"
+          type="eventName"
+          onChange={formik.handleChange}
+          value={formik.values.eventName}
+        />
+      </div>
+      <div>
+        <label htmlFor="eventName">Data zakończenia</label>
+        <DatePicker
+          selected={formik.values.endDate}
+          onChange={date => formik.setFieldValue('endDate', date)}
+        />
+      </div>
+      <div>
+        <label htmlFor="eventName">Budget</label>
+        <input
+          id="budget"
+          type="number"
+          min={0}
+          onChange={formik.handleChange}
+          value={formik.values.budget}
+        />
+      </div>
+      <div>
+        <label htmlFor="message">Message</label>
+        <textarea
+          id="message"
+          onChange={formik.handleChange}
+          value={formik.values.message}
+        />
+      </div>
+
       <FormikProvider value={formik}>
         <FieldArray
           name="persons"

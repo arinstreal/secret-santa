@@ -3,7 +3,7 @@ import EventForm from "./Components/EventForm";
 
 const Home = () => {
   return (<div>
-    Secret Santa
+    <h1>Secret Santa</h1>
     <EventForm/>
   </div>)
 }
