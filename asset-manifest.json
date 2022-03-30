@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/secret-santa/static/css/main.3e501ae3.css",
+    "main.js": "/secret-santa/static/js/main.2e26b6c0.js",
+    "static/js/711.bdb92766.chunk.js": "/secret-santa/static/js/711.bdb92766.chunk.js",
+    "static/media/YesevaOne-Regular.ttf": "/secret-santa/static/media/YesevaOne-Regular.77e7411de8c57683e277.ttf",
+    "index.html": "/secret-santa/index.html",
+    "main.3e501ae3.css.map": "/secret-santa/static/css/main.3e501ae3.css.map",
+    "main.2e26b6c0.js.map": "/secret-santa/static/js/main.2e26b6c0.js.map",
+    "711.bdb92766.chunk.js.map": "/secret-santa/static/js/711.bdb92766.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3e501ae3.css",
+    "static/js/main.2e26b6c0.js"
+  ]
+}
