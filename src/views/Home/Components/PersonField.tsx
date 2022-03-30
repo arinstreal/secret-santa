@@ -1,32 +1,36 @@
-import { Field } from 'formik';
 import React, { FC } from 'react';
 import { IPerson } from "../../../interfaces/person";
+import InputWithLabel from "../../../shared/InputWithLabel/InputWithLabel";
 
 type PersonFieldProps = {
   person: IPerson,
   prefixName: string,
-  onChange: (event: React.ChangeEvent<any>) => void
+  onChange: (event: React.ChangeEvent<any>) => void,
+  remove: () => void,
+  readOnly?: boolean;
 }
 
-const PersonField: FC<PersonFieldProps> = ({ person, prefixName, onChange }: PersonFieldProps) => {
+const PersonField: FC<PersonFieldProps> = ({ person, prefixName, onChange, remove, readOnly }: PersonFieldProps) => {
   return (
-    <div>
-      <label htmlFor={`${prefixName}name`}>Name</label>
-      <input
-        type="text"
+    <div className="d-flex">
+      <InputWithLabel
         id={`${prefixName}name`}
-        name={`${prefixName}name`}
+        label="Name"
+        handleChange={onChange}
         value={person.name}
-        onChange={onChange}
+        readOnly={readOnly}
       />
-      <label htmlFor={`${prefixName}email`}>Email</label>
-      <input
-        type="email"
+      <InputWithLabel
         id={`${prefixName}email`}
-        name={`${prefixName}email`}
+        label="Email"
+        handleChange={onChange}
         value={person.email}
-        onChange={onChange}
+        type="email"
+        readOnly={readOnly}
       />
+      <button type="button" className="remove" onClick={remove}>
+        X
+      </button>
     </div>
   )
 }

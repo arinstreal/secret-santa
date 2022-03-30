@@ -1,0 +1,22 @@
+button {
+  font-size: var(--size-16);
+  color: var(--white);
+  background: var(--green-100);
+  padding: 16px 32px;
+  font-weight: 400;
+  border-radius: 8px;
+  border: 2px solid var(--green-100);
+  cursor: pointer;
+
+  &.border {
+    background: var(--white);
+    color: var(--green-100);
+  }
+
+  &.remove {
+    background-color: var(--error-100);
+    border-color: var(--error-100);
+    height: 56px;
+    margin-top: 27px;
+  }
+}

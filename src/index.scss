@@ -1,13 +1,44 @@
+@import "scss/variables.scss";
+@import "scss/button.scss";
+@import "scss/wrappers.scss";
+
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  max-width: 1000px;
+  width: 90%;
+  margin: 0 auto;
+  background-color: var(--black-20);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+:root {
+  * {
+    box-sizing: border-box;
+  }
+  input {
+    outline: none;
+  }
+  button {
+    box-shadow: none;
+  }
+}
+
+@font-face {
+  font-family: 'YesevaOne Regular';
+  src: local('YesevaOneRegular'), url(./fonts/YesevaOne-Regular.ttf) format('truetype');
+}
+
+h1 {
+  font-family: 'YesevaOne Regular';
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+

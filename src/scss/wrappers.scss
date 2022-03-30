@@ -1,0 +1,15 @@
+.card {
+  background-color: var(--white);
+  padding: 12px 32px 32px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+}
+
+.d-flex {
+  display: flex;
+  gap: 16px;
+}
+
+.mb-2 {
+  margin-bottom: 8px;
+}
