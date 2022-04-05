@@ -2,7 +2,7 @@
   "name": "secret-santa",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://arinstreal.github.io/secret-santa/",
+  "homepage": "https://arinstreal.github.io/secret-santa",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",

@@ -12,8 +12,8 @@ function App() {
       <Layout/>
       <Routes>
         {/*<Route path="/" element={<Layout/>}>*/}
-          <Route index element={<Home />} />
-          <Route path={`event/:eventId`} element={<Detail/>}/>
+          <Route path="secret-santa/" element={<Home />} />
+          <Route path={`secret-santa/event/:eventId`} element={<Detail/>}/>
           <Route path="*" element={<Page404/>}/>
         {/*</Route>*/}
       </Routes>

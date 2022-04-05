@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Layout = () => {
   return (
     <div>
-      <Link to="/"><h1>Secret Santa</h1></Link>
+      <Link to="secret-santa/"><h1>Secret Santa</h1></Link>
     </div>
   )
 }

@@ -1,8 +1,10 @@
-import { useFormik } from "formik";
+import { Field, FormikProvider, useFormik } from "formik";
 import { IEvent } from "../../interfaces/event";
 import { FC } from "react";
-import InputWithLabel from "../InputWithLabel/InputWithLabel";
 import PersonsFields from "./Components/PersonsFields";
+import { useParams } from "react-router-dom";
+import { omit } from "lodash";
+import EventFields from "./Components/EventFields";
 
 const API = 'https://webapp-220201114916.azurewebsites.net/';
 
@@ -10,6 +12,7 @@ const initialValues: IEvent = {
   organizerName: '',
   organizerEmail: '',
   eventName: '',
+  name: '',
   endDate: null,
   budget: 0,
   message: '',
@@ -17,86 +20,90 @@ const initialValues: IEvent = {
 }
 
 interface IEventForm {
-  data?: IEvent | null
+  data?: IEvent | null;
   readOnly?: boolean;
+  isNew?: boolean;
+  handleEdit?: () => void;
 }
 
-const EventForm: FC<IEventForm> = ({ data, readOnly }) => {
+const EventForm: FC<IEventForm> = ({ data, readOnly, isNew, handleEdit }) => {
+  let { eventId } = useParams();
+
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues: { ...(data || initialValues) },
+    initialValues: { ...(data || initialValues), organizerInEvent: false },
     onSubmit: values => {
-      const requestOptions = {
-        method: 'POST',
-        // mode: "cors",
-        credentials: 'same-origin', // include, *same-origin, omit
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(values)
-      };
-      // @ts-ignore
-      fetch(`${API}Events`, requestOptions)
-        .then(response => response.json())
-      // .then(data => setPostId(data.id));
-      alert(JSON.stringify(values, null, 2));
-    },
+      isNew ? onCreateNew(values) : onEditEvent(omit(values, 'creatingDate'));
+    }
   });
 
+  const onCreateNew = (values: any) => {
+    const entity = {
+      ...values
+    }
+    if (values.organizerInEvent) {
+      entity.persons.push({ name: values.organizerName, email: values.organizerEmail });
+    }
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(entity)
+    };
+
+    // @ts-ignore
+    fetch(`${API}Events`, requestOptions)
+      .then(response => response.json())
+    // .then(data => setPostId(data.id));
+    alert(JSON.stringify(entity, null, 2));
+  }
+
+  const onEditEvent = (values: any) => {
+    const requestOptions = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(values)
+    };
+    // @ts-ignore
+    fetch(`${API}Events/${eventId}/Edit`, requestOptions)
+      .then(response => response.json())
+    // .then(data => setPostId(data.id));
+    alert(JSON.stringify(values, null, 2));
+  }
+
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <h2>Event</h2>
-      <InputWithLabel
-        id="organizerName"
-        label="Organizer name"
-        handleChange={formik.handleChange}
-        value={formik.values.organizerName}
-        readOnly={readOnly}
-      />
-      <InputWithLabel
-        id="organizerEmail"
-        label="Organizer email"
-        type="email"
-        handleChange={formik.handleChange}
-        value={formik.values.organizerEmail}
-        readOnly={readOnly}
-      />
-      <InputWithLabel
-        id="eventName"
-        label="Event name"
-        handleChange={formik.handleChange}
-        value={formik.values.eventName}
-        readOnly={readOnly}
-      />
-      {/*<div>*/}
-      {/*  <label htmlFor="eventName">Data zakończenia</label>*/}
-      {/*  <DatePicker*/}
-      {/*    selected={formik.values.endDate}*/}
-      {/*    onChange={date => formik.setFieldValue('endDate', date)}*/}
-      {/*  />*/}
-      {/*</div>*/}
-      <InputWithLabel
-        id="budget"
-        label="Budget"
-        handleChange={formik.handleChange}
-        value={formik.values.budget}
-        type="number"
-        min={0}
-        readOnly={readOnly}
-      />
-      <InputWithLabel
-        id="message"
-        label="Message"
-        handleChange={formik.handleChange}
-        value={formik.values.message}
-        readOnly={readOnly}
-      />
-      <h2>Persons</h2>
-      <PersonsFields formik={formik}/>
-      <div>
-        <button type="submit">Submit</button>
-      </div>
-    </form>
+    <>
+      <FormikProvider value={formik}>
+        <form onSubmit={formik.handleSubmit}>
+          <EventFields
+            values={formik.values}
+            handleChange={formik.handleChange}
+            setFieldValue={formik.setFieldValue}
+            readOnly={readOnly}
+            isNew={isNew}
+          />
+          <label>
+            <Field type="checkbox" name="organizerInEvent" disabled={readOnly}/>
+            Czy organizator bierze udział w losowaniu?
+          </label>
+          <PersonsFields readOnly={readOnly} isNew={isNew} persons={formik.values.persons}
+                         handleChange={formik.handleChange}/>
+          <div className="end">
+            {
+              !readOnly && <button type="submit">Submit</button>
+            }
+          </div>
+        </form>
+      </FormikProvider>
+      {
+        readOnly && <div className="end">
+              <button onClick={handleEdit} type="button">Edit</button>
+          </div>
+      }
+    </>
   );
 };
 

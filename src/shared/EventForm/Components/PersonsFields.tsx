@@ -1,17 +1,16 @@
-import { FieldArray, FieldArrayRenderProps, FormikContextType, FormikProvider } from "formik";
+import { FieldArray, FieldArrayRenderProps } from "formik";
 import PersonField from "../../../views/Home/Components/PersonField";
-import { FC, useMemo } from "react";
-import { IEvent } from "../../../interfaces/event";
-import { initPerson } from "../../../interfaces/person";
+import { ChangeEvent, FC } from "react";
+import { initPerson, IPerson } from "../../../interfaces/person";
 
 interface IPersonsFields {
-  formik: FormikContextType<IEvent>;
   readOnly?: boolean;
+  isNew?: boolean;
+  handleChange: (e: ChangeEvent) => void;
+  persons: IPerson[]
 }
 
-const PersonsFields: FC<IPersonsFields> = ({ formik, readOnly }) => {
-  const persons = useMemo(() => formik.values.persons, [formik]);
-
+const PersonsFields: FC<IPersonsFields> = ({ persons, readOnly, isNew, handleChange }) => {
   const addPerson = (personsArray: FieldArrayRenderProps) => {
     personsArray.push(initPerson());
   }
@@ -22,7 +21,7 @@ const PersonsFields: FC<IPersonsFields> = ({ formik, readOnly }) => {
 
   return (
     <div>
-      <FormikProvider value={formik}>
+      <h2>Persons</h2>
         <FieldArray
           name="persons"
           render={arrayHelpers => (
@@ -33,26 +32,29 @@ const PersonsFields: FC<IPersonsFields> = ({ formik, readOnly }) => {
                     key={index}
                     person={persons[index]}
                     prefixName={`persons.${index}.`}
-                    onChange={formik.handleChange}
+                    onChange={handleChange}
                     remove={removePerson(arrayHelpers, index)}
                     readOnly={readOnly}
+                    persons={persons}
+                    isNew={isNew}
                   />
                 ))
               }
-              <div className="mb-2">
-                <button
-                  className="border"
-                  type="button"
-                  onClick={() => addPerson(arrayHelpers)}
-                >
-                  + Add person
-                </button>
-              </div>
+              {
+                !readOnly && <div className="mb-2">
+                      <button
+                          className="border"
+                          type="button"
+                          onClick={() => addPerson(arrayHelpers)}
+                      >
+                          + Add person
+                      </button>
+                  </div>
+              }
             </div>
           )
           }
         />
-      </FormikProvider>
     </div>
   )
 }
