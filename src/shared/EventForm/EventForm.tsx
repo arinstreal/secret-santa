@@ -11,7 +11,6 @@ const API = 'https://webapp-220201114916.azurewebsites.net/';
 const initialValues: IEvent = {
   organizerName: '',
   organizerEmail: '',
-  eventName: '',
   name: '',
   endDate: null,
   budget: 0,
@@ -62,9 +61,7 @@ const EventForm: FC<IEventForm> = ({ data, readOnly, isNew, handleEdit }) => {
   const onEditEvent = (values: any) => {
     const requestOptions = {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+
       body: JSON.stringify(values)
     };
     // @ts-ignore
@@ -89,8 +86,12 @@ const EventForm: FC<IEventForm> = ({ data, readOnly, isNew, handleEdit }) => {
             <Field type="checkbox" name="organizerInEvent" disabled={readOnly}/>
             Czy organizator bierze udział w losowaniu?
           </label>
-          <PersonsFields readOnly={readOnly} isNew={isNew} persons={formik.values.persons}
-                         handleChange={formik.handleChange}/>
+          <PersonsFields
+            readOnly={readOnly}
+            isNew={isNew}
+            persons={formik.values.persons}
+            handleChange={formik.handleChange}
+          />
           <div className="end">
             {
               !readOnly && <button type="submit">Submit</button>
