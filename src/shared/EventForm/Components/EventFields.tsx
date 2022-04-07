@@ -32,14 +32,14 @@ const EventFields: FC<IEventFields> = ({ values, handleChange, readOnly, isNew, 
         readOnly={readOnly}
       />
       <InputWithLabel
-        id={isNew ? 'eventName' : 'name'}
+        id={'name'}
         label="Event name"
         handleChange={handleChange}
-        value={isNew ? values.eventName : values.name}
+        value={values.name}
         readOnly={readOnly}
       />
       <div>
-        <label htmlFor="eventName">Data zakończenia</label>
+        <label htmlFor="endDate">Data zakończenia</label>
         <ReactDatePicker
           selected={values.endDate ? new Date(values.endDate!) : null}
           onChange={date => setFieldValue('endDate', date)}

@@ -7,10 +7,10 @@ interface IPersonsFields {
   readOnly?: boolean;
   isNew?: boolean;
   handleChange: (e: ChangeEvent) => void;
-  persons: IPerson[]
+  persons?: IPerson[]
 }
 
-const PersonsFields: FC<IPersonsFields> = ({ persons, readOnly, isNew, handleChange }) => {
+const PersonsFields: FC<IPersonsFields> = ({ persons = [], readOnly, isNew, handleChange }) => {
   const addPerson = (personsArray: FieldArrayRenderProps) => {
     personsArray.push(initPerson());
   }

@@ -12,10 +12,13 @@ export default function useFetch({ type, url, body }: IUseFetch) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+  const fetchData = ()=> {
     setLoading(true);
     fetch(`${API}${url}`, {
       method: type,
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: body
     })
       .then(response => response.json())
@@ -24,8 +27,9 @@ export default function useFetch({ type, url, body }: IUseFetch) {
         setError(err);
       })
       .finally(() => setLoading(false));
-  }, [url, type]);
+  }
+
   return {
-    data, error, loading
+    data, error, loading, fetchData
   }
 }
