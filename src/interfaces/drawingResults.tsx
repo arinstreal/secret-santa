@@ -1,4 +1,4 @@
-export interface IDrawingResults {
+export interface IDrawingResult {
   eventId: string,
   eventName: string,
   endDate: string,

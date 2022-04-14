@@ -1,18 +1,17 @@
-import { ChangeEvent, FC } from "react";
+import { FC } from "react";
 import InputWithLabel from "../../InputWithLabel/InputWithLabel";
 import ReactDatePicker from "react-datepicker";
 import { IEvent } from "../../../interfaces/event";
-import { Field } from "formik";
+import { useFormikContext } from "formik";
 
 interface IEventFields {
-  values: IEvent;
-  handleChange: (e: ChangeEvent) => void;
-  setFieldValue: (name: string, any: any) => void;
   readOnly?: boolean;
   isNew?: boolean;
 }
 
-const EventFields: FC<IEventFields> = ({ values, handleChange, readOnly, isNew, setFieldValue }) => {
+const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
+  const { values, handleChange, setFieldValue } = useFormikContext<IEvent>();
+
   return (
     <div>
       <h2>Event</h2>
@@ -21,7 +20,7 @@ const EventFields: FC<IEventFields> = ({ values, handleChange, readOnly, isNew, 
         label="Organizer name"
         handleChange={handleChange}
         value={values.organizerName}
-        readOnly={readOnly}
+        readOnly={readOnly || !isNew}
       />
       <InputWithLabel
         id="organizerEmail"
@@ -29,7 +28,7 @@ const EventFields: FC<IEventFields> = ({ values, handleChange, readOnly, isNew, 
         type="email"
         handleChange={handleChange}
         value={values.organizerEmail}
-        readOnly={readOnly}
+        readOnly={readOnly || !isNew}
       />
       <InputWithLabel
         id={'name'}
@@ -63,6 +62,7 @@ const EventFields: FC<IEventFields> = ({ values, handleChange, readOnly, isNew, 
         readOnly={readOnly}
       />
     </div>
+
   )
 }
 

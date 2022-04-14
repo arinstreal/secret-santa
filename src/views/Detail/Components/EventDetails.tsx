@@ -1,8 +1,10 @@
-import { FC } from "react";
+import { FC, MouseEvent, useEffect, useState } from "react";
 import { FormikProvider, useFormik } from "formik";
 import EventFields from "../../../shared/EventForm/Components/EventFields";
-import { omit } from "lodash";
 import { IEvent } from "../../../interfaces/event";
+import useFetch from "../../../hooks/useFetch";
+import { IDrawingResult } from "../../../interfaces/drawingResults";
+import { useParams } from "react-router-dom";
 
 const initialValues: IEvent = {
   organizerName: '',
@@ -15,43 +17,46 @@ const initialValues: IEvent = {
 
 interface IEventDetails {
   eventData?: IEvent;
-  readOnly?: boolean;
 }
 
-const EventDetails: FC<IEventDetails> = ({ eventData, readOnly }) => {
+const EventDetails: FC<IEventDetails> = ({ eventData }) => {
+  let { eventId } = useParams();
+  const [readOnly, setReadOnly] = useState(true);
+  const { fetchResponseData: editEvent, success } = useFetch<IDrawingResult[]>({
+    type: 'PUT',
+    url: `Events/${eventId}/Edit`
+  });
+
+  const handleEdit = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setReadOnly(prev => (!prev));
+  }
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: { ...(eventData || initialValues), organizerInEvent: false },
     onSubmit: values => {
-      onEditEvent(omit(values, ['creatingDate', 'persons']));
+      const { name, endDate, budget, message } = values;
+      editEvent({ name, date: endDate, budget, message });
     }
   });
 
-  const onEditEvent = (values: any) => {
-    const requestOptions = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(values)
-    };
-    // @ts-ignore
-    fetch(`${API}Events/${eventId}/Edit`, requestOptions)
-      .then(response => response.json())
-  }
-
+  useEffect(() => {
+    if (success) {
+      setReadOnly(true);
+    }
+  }, [success]);
   return (
     <FormikProvider value={formik}>
       <form onSubmit={formik.handleSubmit}>
         <EventFields
-          values={formik.values}
-          handleChange={formik.handleChange}
-          setFieldValue={formik.setFieldValue}
           readOnly={readOnly}
         />
         <div className="end">
           {
-            !readOnly && <button type="submit">Save</button>
+            !readOnly ?
+              <button type="submit">Save</button> :
+              <button onClick={handleEdit} type="button">Edit</button>
           }
         </div>
       </form>

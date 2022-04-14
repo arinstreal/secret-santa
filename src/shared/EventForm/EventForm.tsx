@@ -76,9 +76,6 @@ const EventForm: FC<IEventForm> = ({ data, readOnly, isNew, handleEdit }) => {
       <FormikProvider value={formik}>
         <form onSubmit={formik.handleSubmit}>
           <EventFields
-            values={formik.values}
-            handleChange={formik.handleChange}
-            setFieldValue={formik.setFieldValue}
             readOnly={readOnly}
             isNew={isNew}
           />
@@ -100,7 +97,8 @@ const EventForm: FC<IEventForm> = ({ data, readOnly, isNew, handleEdit }) => {
         </form>
       </FormikProvider>
       {
-        readOnly && <div className="end">
+        readOnly &&
+          <div className="end">
               <button onClick={handleEdit} type="button">Edit</button>
           </div>
       }

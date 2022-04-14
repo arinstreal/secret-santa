@@ -1,7 +1,8 @@
-import { FieldArray, FieldArrayRenderProps } from "formik";
+import { FieldArray, FieldArrayRenderProps, useFormikContext } from "formik";
 import PersonField from "../../../views/Home/Components/PersonField";
 import { ChangeEvent, FC } from "react";
 import { initPerson, IPerson } from "../../../interfaces/person";
+import { IEvent } from "../../../interfaces/event";
 
 interface IPersonsFields {
   readOnly?: boolean;
@@ -10,7 +11,9 @@ interface IPersonsFields {
   persons?: IPerson[]
 }
 
-const PersonsFields: FC<IPersonsFields> = ({ persons = [], readOnly, isNew, handleChange }) => {
+const PersonsFields: FC<IPersonsFields> = ({ persons = [], readOnly, isNew }) => {
+  const { handleChange } = useFormikContext<IEvent>();
+
   const addPerson = (personsArray: FieldArrayRenderProps) => {
     personsArray.push(initPerson());
   }
