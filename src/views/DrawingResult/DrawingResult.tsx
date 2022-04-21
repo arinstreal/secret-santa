@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import { FormikProvider, useFormik } from "formik";
 import { omit } from "lodash";
 import InputWithLabel from "../../shared/InputWithLabel/InputWithLabel";
+import Gift from "../../shared/Gift/Gift";
 
 const DrawingResult: FC = () => {
   const { drawingId } = useParams();
@@ -31,6 +32,7 @@ const DrawingResult: FC = () => {
       <h2>Drawing result</h2>
       <h3>Hello {drawingResult?.giverName}</h3>
       <div className="card">
+        <Gift person={drawingResult?.recipientName}/>
         <div>Event name: {drawingResult?.eventName}</div>
         <div>End date: {drawingResult?.endDate && dayjs(drawingResult?.endDate).format('YYYY-MM-DD HH:mm:ss')}</div>
         <div>Budget: {drawingResult?.budget}</div>

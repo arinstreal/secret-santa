@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import EventForm from "../../shared/EventForm/EventForm";
 import useFetch from "../../hooks/useFetch";
 import { get } from 'lodash';
 import DrawingResultsList from "./Components/DrawingResultsList";
 import { IEvent } from "../../interfaces/event";
 import EventDetails from "./Components/EventDetails";
+import { Loader } from "../../shared/Loader/Loader";
 
 const Detail = () => {
   let { eventId } = useParams();
@@ -24,9 +24,12 @@ const Detail = () => {
     <div className="card">
       {
         get(event, 'id', false) ?
-          <EventDetails eventData={event}/>
+          <>
+            <EventDetails eventData={event}/>
+            <DrawingResultsList/>
+          </>
           :
-          <div>Loading...</div>
+          <Loader/>
       }
       {/*{*/}
       {/*  get(event, 'id', false) ?*/}
@@ -34,7 +37,6 @@ const Detail = () => {
       {/*    :*/}
       {/*    <div>Loading...</div>*/}
       {/*}*/}
-      <DrawingResultsList/>
     </div>)
 }
 
