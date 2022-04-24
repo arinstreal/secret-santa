@@ -3,6 +3,7 @@ import PersonField from "../../../views/Home/Components/PersonField";
 import { ChangeEvent, FC, ReactChildren } from "react";
 import { initPerson, IPerson } from "../../../interfaces/person";
 import { IEvent } from "../../../interfaces/event";
+import { Button } from "@mui/material";
 
 interface IPersonsFields {
   readOnly?: boolean;
@@ -49,13 +50,13 @@ const PersonsFields: FC<IPersonsFields> = ({ persons = [], readOnly, isNew, chil
             }
             {
               !readOnly && <div className="mb-2">
-                    <button
-                        className="border"
+                    <Button
                         type="button"
+                        variant="outlined" color="success"
                         onClick={() => addPerson(arrayHelpers)}
                     >
                         + Add person
-                    </button>
+                    </Button>
                 </div>
             }
           </div>

@@ -7,8 +7,7 @@ import { omit } from "lodash";
 import EventFields from "./Components/EventFields";
 import useFetch from "../../hooks/useFetch";
 import { IPerson } from "../../interfaces/person";
-
-const API = 'https://webapp-220201114916.azurewebsites.net/';
+import Button  from "@mui/material/Button";
 
 const initialValues: IEvent = {
   organizerName: '',
@@ -29,11 +28,11 @@ interface IEventForm {
 
 const EventForm: FC<IEventForm> = ({ data, readOnly, isNew, handleEdit }) => {
     let { eventId } = useParams();
-    const { fetchResponseData: createEvent, success: createSuccess } = useFetch<IPerson[]>({
+    const { fetchResponseData: createEvent } = useFetch<IPerson[]>({
       type: 'PUT',
-      url: `Events/${eventId}/Edit`
+      url: `Events`
     });
-    const { fetchResponseData: editEvent, success: editSuccess } = useFetch<IPerson[]>({
+    const { fetchResponseData: editEvent } = useFetch<IPerson[]>({
       type: 'PUT',
       url: `Events/${eventId}/Edit`
     });
@@ -76,7 +75,7 @@ const EventForm: FC<IEventForm> = ({ data, readOnly, isNew, handleEdit }) => {
             />
             <div className="end">
               {
-                !readOnly && <button type="submit">Submit</button>
+                !readOnly && <Button variant="contained" color="primary" type="submit">Submit</Button>
               }
             </div>
           </form>
@@ -84,7 +83,7 @@ const EventForm: FC<IEventForm> = ({ data, readOnly, isNew, handleEdit }) => {
         {
           readOnly &&
             <div className="end">
-                <button onClick={handleEdit} type="button">Edit</button>
+                <Button variant="contained" color="primary" onClick={handleEdit} type="button">Edit</Button>
             </div>
         }
       </>

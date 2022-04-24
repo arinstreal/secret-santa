@@ -23,7 +23,7 @@ const DrawingResultsList: FC = () => {
   }
 
   useEffect(() => {
-    fetchResponseData()
+    if (eventId) fetchResponseData()
   }, [eventId]);
 
   if (!responseData?.[0]) return (

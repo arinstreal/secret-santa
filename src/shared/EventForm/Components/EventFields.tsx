@@ -1,8 +1,8 @@
-import { FC } from "react";
-import InputWithLabel from "../../InputWithLabel/InputWithLabel";
+import React, { FC } from "react";
 import ReactDatePicker from "react-datepicker";
 import { IEvent } from "../../../interfaces/event";
 import { useFormikContext } from "formik";
+import { Stack, TextField } from "@mui/material";
 
 interface IEventFields {
   readOnly?: boolean;
@@ -13,29 +13,32 @@ const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
   const { values, handleChange, setFieldValue } = useFormikContext<IEvent>();
 
   return (
-    <div>
+    <Stack  spacing={2}>
       <h2>Wydarzenie</h2>
-      <InputWithLabel
+      <TextField
         id="organizerName"
         label="Organizator"
-        handleChange={handleChange}
+        onChange={handleChange}
         value={values.organizerName}
-        readOnly={readOnly || !isNew}
+        disabled={readOnly || !isNew}
+        fullWidth
       />
-      <InputWithLabel
+      <TextField
         id="organizerEmail"
         label="Email organizatora"
         type="email"
-        handleChange={handleChange}
+        onChange={handleChange}
         value={values.organizerEmail}
-        readOnly={readOnly || !isNew}
+        disabled={readOnly || !isNew}
+        fullWidth
       />
-      <InputWithLabel
+      <TextField
         id="name"
         label="Nazwa wydarzenia"
-        handleChange={handleChange}
+        onChange={handleChange}
         value={values.name}
-        readOnly={readOnly}
+        disabled={readOnly}
+        fullWidth
       />
       <div>
         <label htmlFor="endDate">Data zakończenia</label>
@@ -45,23 +48,25 @@ const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
           readOnly={readOnly}
         />
       </div>
-      <InputWithLabel
+      <TextField
         id="budget"
         label="Budżet"
-        handleChange={handleChange}
+        onChange={handleChange}
         value={values.budget}
         type="number"
-        min={0}
-        readOnly={readOnly}
+        inputProps={{ min: '0', pattern: '[0-9]*' }}
+        disabled={readOnly}
+        fullWidth
       />
-      <InputWithLabel
+      <TextField
         id="message"
         label="Wiadomość"
-        handleChange={handleChange}
+        onChange={handleChange}
         value={values.message}
-        readOnly={readOnly}
+        disabled={readOnly}
+        fullWidth
       />
-    </div>
+    </Stack>
   )
 }
 

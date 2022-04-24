@@ -5,13 +5,19 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "react-datepicker/dist/react-datepicker.css";
 import { BrowserRouter } from 'react-router-dom';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './theme';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App/>
-    </BrowserRouter>
-  </React.StrictMode>,
+  <ThemeProvider theme={theme}>
+    <React.StrictMode>
+      <BrowserRouter>
+        <CssBaseline/>
+        <App/>
+      </BrowserRouter>
+    </React.StrictMode>
+  </ThemeProvider>,
   document.getElementById('root')
 );
 
