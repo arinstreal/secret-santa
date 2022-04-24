@@ -6,6 +6,8 @@ import DrawingResultsList from "./Components/DrawingResultsList";
 import { IEvent } from "../../interfaces/event";
 import EventDetails from "./Components/EventDetails";
 import { Loader } from "../../shared/Loader/Loader";
+import EventForm from "../../shared/EventForm/EventForm";
+import PersonsDetails from "./Components/PersonsDetails";
 
 const Detail = () => {
   let { eventId } = useParams();
@@ -31,12 +33,12 @@ const Detail = () => {
           :
           <Loader/>
       }
-      {/*{*/}
-      {/*  get(event, 'id', false) ?*/}
-      {/*    <EventForm data={event} readOnly={readOnly} handleEdit={handleEdit} isNew={false}/>*/}
-      {/*    :*/}
-      {/*    <div>Loading...</div>*/}
-      {/*}*/}
+      {
+        get(event, 'id', false) ?
+          event?.persons && <PersonsDetails persons={event?.persons}/>
+          :
+          <Loader/>
+      }
     </div>)
 }
 

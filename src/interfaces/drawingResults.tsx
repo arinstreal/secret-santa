@@ -7,5 +7,6 @@ export interface IDrawingResult {
   giverName: string,
   giverGiftWishes: string,
   recipientName: string,
-  recipientGiftWishes: string
+  recipientGiftWishes: string,
+  giverId: string
 }

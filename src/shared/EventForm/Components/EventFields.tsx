@@ -14,25 +14,25 @@ const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
 
   return (
     <div>
-      <h2>Event</h2>
+      <h2>Wydarzenie</h2>
       <InputWithLabel
         id="organizerName"
-        label="Organizer name"
+        label="Organizator"
         handleChange={handleChange}
         value={values.organizerName}
         readOnly={readOnly || !isNew}
       />
       <InputWithLabel
         id="organizerEmail"
-        label="Organizer email"
+        label="Email organizatora"
         type="email"
         handleChange={handleChange}
         value={values.organizerEmail}
         readOnly={readOnly || !isNew}
       />
       <InputWithLabel
-        id={'name'}
-        label="Event name"
+        id="name"
+        label="Nazwa wydarzenia"
         handleChange={handleChange}
         value={values.name}
         readOnly={readOnly}
@@ -47,7 +47,7 @@ const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
       </div>
       <InputWithLabel
         id="budget"
-        label="Budget"
+        label="Budżet"
         handleChange={handleChange}
         value={values.budget}
         type="number"
@@ -56,13 +56,12 @@ const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
       />
       <InputWithLabel
         id="message"
-        label="Message"
+        label="Wiadomość"
         handleChange={handleChange}
         value={values.message}
         readOnly={readOnly}
       />
     </div>
-
   )
 }
 

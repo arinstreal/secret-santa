@@ -4,8 +4,7 @@ const API = 'https://webapp-220201114916.azurewebsites.net/';
 
 interface IUseFetch {
   type: 'GET' | 'PUT' | 'POST',
-  url: string,
-  body?: any
+  url: string
 }
 
 export default function useFetch< T = unknown>({ type, url}: IUseFetch) {
