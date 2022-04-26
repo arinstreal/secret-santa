@@ -1,16 +1,21 @@
-import { FieldArray, FieldArrayRenderProps } from "formik";
+import { FieldArray, FieldArrayRenderProps, useFormikContext } from "formik";
 import PersonField from "../../../views/Home/Components/PersonField";
-import { ChangeEvent, FC } from "react";
+import React, { ChangeEvent, FC, ReactChildren } from "react";
 import { initPerson, IPerson } from "../../../interfaces/person";
+import { IEvent } from "../../../interfaces/event";
+import { Button, Stack, Typography } from "@mui/material";
 
 interface IPersonsFields {
   readOnly?: boolean;
   isNew?: boolean;
   handleChange: (e: ChangeEvent) => void;
-  persons?: IPerson[]
+  persons?: IPerson[];
+  children?: ReactChildren;
 }
 
-const PersonsFields: FC<IPersonsFields> = ({ persons = [], readOnly, isNew, handleChange }) => {
+const PersonsFields: FC<IPersonsFields> = ({ persons = [], readOnly, isNew, children }) => {
+  const { handleChange } = useFormikContext<IEvent>();
+
   const addPerson = (personsArray: FieldArrayRenderProps) => {
     personsArray.push(initPerson());
   }
@@ -21,15 +26,17 @@ const PersonsFields: FC<IPersonsFields> = ({ persons = [], readOnly, isNew, hand
 
   return (
     <div>
-      <h2>Persons</h2>
-        <FieldArray
-          name="persons"
-          render={arrayHelpers => (
-            <div>
-              {
-                persons.map((person, index) => (
+      <Typography variant="h3" gutterBottom component="div">
+        Uczestnicy
+      </Typography>
+      <FieldArray
+        name="persons"
+        render={arrayHelpers => (
+          <div>
+            {
+              persons.map((person, index) => (
+                <Stack spacing={2} key={index}>
                   <PersonField
-                    key={index}
                     person={persons[index]}
                     prefixName={`persons.${index}.`}
                     onChange={handleChange}
@@ -38,23 +45,25 @@ const PersonsFields: FC<IPersonsFields> = ({ persons = [], readOnly, isNew, hand
                     persons={persons}
                     isNew={isNew}
                   />
-                ))
-              }
-              {
-                !readOnly && <div className="mb-2">
-                      <button
-                          className="border"
-                          type="button"
-                          onClick={() => addPerson(arrayHelpers)}
-                      >
-                          + Add person
-                      </button>
-                  </div>
-              }
-            </div>
-          )
-          }
-        />
+                  {children}
+                </Stack>
+              ))
+            }
+            {
+              !readOnly && <div className="mb-2">
+                    <Button
+                        type="button"
+                        variant="outlined" color="success"
+                        onClick={() => addPerson(arrayHelpers)}
+                    >
+                        + Dodaj osobę
+                    </Button>
+                </div>
+            }
+          </div>
+        )
+        }
+      />
     </div>
   )
 }

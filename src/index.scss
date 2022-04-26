@@ -8,8 +8,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  max-width: 1000px;
-  width: 90%;
   margin: 0 auto;
   background-color: var(--black-20);
 }
@@ -44,4 +42,8 @@ h1 {
 
 .end {
   text-align: end;
+}
+
+.w-100 {
+  width: 100%;
 }

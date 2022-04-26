@@ -1,4 +1,4 @@
-export interface IDrawingResults {
+export interface IDrawingResult {
   eventId: string,
   eventName: string,
   endDate: string,
@@ -7,5 +7,6 @@ export interface IDrawingResults {
   giverName: string,
   giverGiftWishes: string,
   recipientName: string,
-  recipientGiftWishes: string
+  recipientGiftWishes: string,
+  giverId: string
 }

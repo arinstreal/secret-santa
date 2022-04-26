@@ -1,68 +1,89 @@
-import { ChangeEvent, FC } from "react";
-import InputWithLabel from "../../InputWithLabel/InputWithLabel";
-import ReactDatePicker from "react-datepicker";
+import React, { FC } from "react";
 import { IEvent } from "../../../interfaces/event";
-import { Field } from "formik";
+import { useFormikContext } from "formik";
+import { FormControl, InputAdornment, InputLabel, OutlinedInput, Stack, TextField, Typography } from "@mui/material";
+import { DesktopDatePicker } from "@mui/x-date-pickers";
 
 interface IEventFields {
-  values: IEvent;
-  handleChange: (e: ChangeEvent) => void;
-  setFieldValue: (name: string, any: any) => void;
   readOnly?: boolean;
   isNew?: boolean;
 }
 
-const EventFields: FC<IEventFields> = ({ values, handleChange, readOnly, isNew, setFieldValue }) => {
+const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
+  const { values, handleChange, setFieldValue } = useFormikContext<IEvent>();
+
+  const onHandleChangeDate = (newValue: Date | null) => {
+    setFieldValue('endDate', newValue);
+  }
+
   return (
-    <div>
-      <h2>Event</h2>
-      <InputWithLabel
+    <Stack spacing={2}>
+      <Typography variant="h3" gutterBottom component="div">
+        Wydarzenie
+      </Typography>
+      <TextField
         id="organizerName"
-        label="Organizer name"
-        handleChange={handleChange}
+        label="Organizator"
+        onChange={handleChange}
         value={values.organizerName}
-        readOnly={readOnly}
+        disabled={readOnly || !isNew}
+        fullWidth
+        required
       />
-      <InputWithLabel
+      <TextField
         id="organizerEmail"
-        label="Organizer email"
+        label="Email organizatora"
         type="email"
-        handleChange={handleChange}
+        onChange={handleChange}
         value={values.organizerEmail}
-        readOnly={readOnly}
+        disabled={readOnly || !isNew}
+        fullWidth
+        required
       />
-      <InputWithLabel
-        id={'name'}
-        label="Event name"
-        handleChange={handleChange}
+      <TextField
+        id="name"
+        label="Nazwa wydarzenia"
+        onChange={handleChange}
         value={values.name}
-        readOnly={readOnly}
+        disabled={readOnly}
+        fullWidth
+        required
       />
-      <div>
-        <label htmlFor="endDate">Data zakończenia</label>
-        <ReactDatePicker
-          selected={values.endDate ? new Date(values.endDate!) : null}
-          onChange={date => setFieldValue('endDate', date)}
-          readOnly={readOnly}
+      <DesktopDatePicker
+        label="Data zakończenia"
+        // name="endDate"
+        inputFormat="DD/MM/YYYY"
+        value={values.endDate ? new Date(values.endDate!) : null}
+        onChange={onHandleChangeDate}
+        renderInput={(params) => <TextField {...params} required />}
+        disabled={readOnly}
+
+      />
+      <FormControl variant="outlined">
+        <InputLabel htmlFor="budget">Budżet</InputLabel>
+        <OutlinedInput
+          label="Budżet"
+          id="budget"
+          value={values.budget}
+          onChange={handleChange}
+          endAdornment={<InputAdornment position="end">PLN</InputAdornment>}
+          aria-describedby="outlined-weight-helper-text"
+          required
+          inputProps={{
+            'aria-label': 'budget',
+          }}
+          disabled={readOnly}
         />
-      </div>
-      <InputWithLabel
-        id="budget"
-        label="Budget"
-        handleChange={handleChange}
-        value={values.budget}
-        type="number"
-        min={0}
-        readOnly={readOnly}
-      />
-      <InputWithLabel
+      </FormControl>
+      <TextField
         id="message"
-        label="Message"
-        handleChange={handleChange}
+        label="Wiadomość"
+        onChange={handleChange}
         value={values.message}
-        readOnly={readOnly}
+        disabled={readOnly}
+        fullWidth
       />
-    </div>
+    </Stack>
   )
 }
 

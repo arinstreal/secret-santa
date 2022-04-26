@@ -1,11 +1,24 @@
+import { AppBar, Box, Link, Toolbar, Typography } from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
 
 const Layout = () => {
   return (
-    <div>
-      <Link to="secret-santa/"><h1>Secret Santa</h1></Link>
-    </div>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography
+            variant="h1"
+            noWrap
+            component="div"
+            align="center"
+            fontFamily="Yeseva One"
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          >
+            <Link href="/" underline="none" color="white">Secret Santa</Link>
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    </Box>
   )
 }
 

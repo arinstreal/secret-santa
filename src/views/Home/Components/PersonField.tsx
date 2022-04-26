@@ -1,8 +1,8 @@
 import { Field } from 'formik';
 import React, { FC, useMemo, useState } from 'react';
 import { IPerson } from "../../../interfaces/person";
-import InputWithLabel from "../../../shared/InputWithLabel/InputWithLabel";
 import { IOption } from "../../../interfaces/option";
+import { Button, Stack, TextField } from "@mui/material";
 
 type PersonFieldProps = {
   person: IPerson,
@@ -14,41 +14,57 @@ type PersonFieldProps = {
   isNew?: boolean;
 }
 
-const PersonField: FC<PersonFieldProps> = ({ person, prefixName, onChange, remove, readOnly, persons, isNew }: PersonFieldProps) => {
+const PersonField: FC<PersonFieldProps> = (
+  {
+    person,
+    prefixName,
+    onChange,
+    remove,
+    readOnly,
+    persons,
+    isNew
+  }: PersonFieldProps) => {
   const [openExclusion, setOpenExclusion] = useState(false);
   // @ts-ignore
-  const personsOptions = useMemo<IOption[]>(() => (persons?.filter(item=> item.id !== person.id) || []).map(item => ({value: item.id, label: item.name })) , [persons]);
+  const personsOptions = useMemo<IOption[]>(() => (persons?.filter(item => item.id !== person.id) || []).map(item => ({
+    value: item.id,
+    label: item.name
+  })), [persons]);
   const handleAddExclusion = () => {
     setOpenExclusion(prev => (!prev));
   }
 
   return (
-    <div>
-      <div className="d-flex">
-        <InputWithLabel
+    <div className="w-100">
+      <Stack direction="row" spacing={2}>
+        <TextField
           id={`${prefixName}name`}
-          label="Name"
-          handleChange={onChange}
+          label="Nazwa"
+          variant="outlined"
+          onChange={onChange}
+          disabled={readOnly}
           value={person.name}
-          readOnly={readOnly}
+          fullWidth
         />
-        <InputWithLabel
+        <TextField
           id={`${prefixName}email`}
           label="Email"
-          handleChange={onChange}
+          onChange={onChange}
           value={person.email}
           type="email"
-          readOnly={readOnly}
+          disabled={readOnly}
+          fullWidth
         />
         {
-          !readOnly && <button type="button" className="remove" onClick={remove}>
+          !readOnly &&
+            <Button variant="outlined" color="error" type="button" className="remove" onClick={remove}>
                 X
-            </button>
+            </Button>
         }
-      </div>
+      </Stack>
 
       {
-        !isNew && !readOnly && <button onClick={handleAddExclusion} type="button">Add exclusions</button>
+        !isNew && !readOnly && <Button onClick={handleAddExclusion} type="button">Dodaj wykluczenia</Button>
       }
       {
         openExclusion &&
