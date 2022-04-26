@@ -4,9 +4,11 @@ import { useParams } from "react-router-dom";
 import { IDrawingResult } from "../../interfaces/drawingResults";
 import dayjs from "dayjs";
 import { FormikProvider, useFormik } from "formik";
-import InputWithLabel from "../../shared/InputWithLabel/InputWithLabel";
 import Gift from "../../shared/Gift/Gift";
-import {LoadingButton} from "../../shared/LoadingButton/LoadingButton";
+import { LoadingButton } from "@mui/lab";
+import { TextField, Typography } from "@mui/material";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
 const DrawingResult: FC = () => {
   const { drawingId } = useParams();
@@ -16,7 +18,11 @@ const DrawingResult: FC = () => {
   });
   const { eventId, giverId } = drawingResult || {};
 
-  const { responseData: wishResult, fetchResponseData: sendWish, loading: loadingSendWish } = useFetch<{ wish: string }>({
+  const {
+    responseData: wishResult,
+    fetchResponseData: sendWish,
+    loading: loadingSendWish
+  } = useFetch<{ wish: string }>({
     type: 'PUT',
     url: `Events/${eventId}/Persons/${giverId}/GiftWishes`
   });
@@ -30,33 +36,52 @@ const DrawingResult: FC = () => {
     initialValues: { wish: drawingResult?.giverGiftWishes || '' },
     onSubmit: values => {
       const { wish } = values;
+      console.log(values)
       sendWish({ wish });
     }
   });
 
   return (
     <div>
-      <h2>Drawing result</h2>
-      <h3>Hello {drawingResult?.giverName}</h3>
+      <Typography variant="h5" gutterBottom component="div" align="left">
+        {drawingResult?.eventName}
+      </Typography>
+      <Typography variant="subtitle2" gutterBottom component="div" align="left">
+        Dzień wymiany prezentami {drawingResult?.endDate && dayjs(drawingResult?.endDate).format('DD.MM.YYYY')}
+        {/*{dayjs(drawingResult?.endDate).fromNow()}*/}
+      </Typography>
+      <Typography variant="h3" gutterBottom component="div" align="center">
+        Witaj {drawingResult?.giverName}!
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom component="div" align="center">
+        Otwórz prezent, aby sprawdzić kogo wylosowałeś/aś
+      </Typography>
       <div className="card">
         <Gift person={drawingResult?.recipientName}/>
-        <div>Event name: {drawingResult?.eventName}</div>
-        <div>End date: {drawingResult?.endDate && dayjs(drawingResult?.endDate).format('YYYY-MM-DD HH:mm:ss')}</div>
-        <div>Budget: {drawingResult?.budget}</div>
-        <div>Message: {drawingResult?.message}</div>
-        <div>Gift wishes: {drawingResult?.recipientGiftWishes}</div>
+        <div>Wymarzone prezenty: {drawingResult?.recipientGiftWishes}</div>
+
+        <div>Budżet: {drawingResult?.budget}</div>
+        <div>Wiadomość: {drawingResult?.message}</div>
       </div>
       <div className="card">
         <FormikProvider value={formik}>
           <form onSubmit={formik.handleSubmit}>
-            <InputWithLabel
+            <TextField
               id="wish"
-              type="textarea"
-              label="Your gift wishes"
-              handleChange={formik.handleChange}
+              label="Twoje wymarzone prezenty"
+              onChange={formik.handleChange}
               value={formik.values.wish}
+              fullWidth
+              required
+              type="textarea"
             />
-            <LoadingButton type="sumbit" text="Wyślij" isLoading={loadingSendWish}/>
+            <LoadingButton
+              loading={loadingSendWish}
+              variant="outlined"
+              type="submit">
+              Save
+            </LoadingButton>
+            {/*<LoadingButton type="sumbit" text="Wyślij" isLoading={loadingSendWish}/>*/}
           </form>
         </FormikProvider>
       </div>

@@ -35,7 +35,7 @@ const PersonField: FC<PersonFieldProps> = (
   }
 
   return (
-    <div>
+    <div className="w-100">
       <Stack direction="row" spacing={2}>
         <TextField
           id={`${prefixName}name`}
@@ -64,7 +64,7 @@ const PersonField: FC<PersonFieldProps> = (
       </Stack>
 
       {
-        !isNew && !readOnly && <Button onClick={handleAddExclusion} type="button">Add exclusions</Button>
+        !isNew && !readOnly && <Button onClick={handleAddExclusion} type="button">Dodaj wykluczenia</Button>
       }
       {
         openExclusion &&

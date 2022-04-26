@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import ReactDatePicker from "react-datepicker";
 import { IEvent } from "../../../interfaces/event";
 import { useFormikContext } from "formik";
-import { Stack, TextField } from "@mui/material";
+import { FormControl, InputAdornment, InputLabel, OutlinedInput, Stack, TextField, Typography } from "@mui/material";
+import { DesktopDatePicker } from "@mui/x-date-pickers";
 
 interface IEventFields {
   readOnly?: boolean;
@@ -12,9 +12,15 @@ interface IEventFields {
 const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
   const { values, handleChange, setFieldValue } = useFormikContext<IEvent>();
 
+  const onHandleChangeDate = (newValue: Date | null) => {
+    setFieldValue('endDate', newValue);
+  }
+
   return (
-    <Stack  spacing={2}>
-      <h2>Wydarzenie</h2>
+    <Stack spacing={2}>
+      <Typography variant="h3" gutterBottom component="div">
+        Wydarzenie
+      </Typography>
       <TextField
         id="organizerName"
         label="Organizator"
@@ -22,6 +28,7 @@ const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
         value={values.organizerName}
         disabled={readOnly || !isNew}
         fullWidth
+        required
       />
       <TextField
         id="organizerEmail"
@@ -31,6 +38,7 @@ const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
         value={values.organizerEmail}
         disabled={readOnly || !isNew}
         fullWidth
+        required
       />
       <TextField
         id="name"
@@ -39,25 +47,34 @@ const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
         value={values.name}
         disabled={readOnly}
         fullWidth
+        required
       />
-      <div>
-        <label htmlFor="endDate">Data zakończenia</label>
-        <ReactDatePicker
-          selected={values.endDate ? new Date(values.endDate!) : null}
-          onChange={date => setFieldValue('endDate', date)}
-          readOnly={readOnly}
-        />
-      </div>
-      <TextField
-        id="budget"
-        label="Budżet"
-        onChange={handleChange}
-        value={values.budget}
-        type="number"
-        inputProps={{ min: '0', pattern: '[0-9]*' }}
+      <DesktopDatePicker
+        label="Data zakończenia"
+        // name="endDate"
+        inputFormat="DD/MM/YYYY"
+        value={values.endDate ? new Date(values.endDate!) : null}
+        onChange={onHandleChangeDate}
+        renderInput={(params) => <TextField {...params} required />}
         disabled={readOnly}
-        fullWidth
+
       />
+      <FormControl variant="outlined">
+        <InputLabel htmlFor="budget">Budżet</InputLabel>
+        <OutlinedInput
+          label="Budżet"
+          id="budget"
+          value={values.budget}
+          onChange={handleChange}
+          endAdornment={<InputAdornment position="end">PLN</InputAdornment>}
+          aria-describedby="outlined-weight-helper-text"
+          required
+          inputProps={{
+            'aria-label': 'budget',
+          }}
+          disabled={readOnly}
+        />
+      </FormControl>
       <TextField
         id="message"
         label="Wiadomość"

@@ -4,6 +4,7 @@ import useFetch from "../../../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import { initPerson, IPerson } from "../../../interfaces/person";
 import PersonsFields from "../../../shared/EventForm/Components/PersonsFields";
+import { Button } from "@mui/material";
 
 interface IPersonsDetails {
   persons: IPerson[];
@@ -46,8 +47,8 @@ const PersonsDetails: FC<IPersonsDetails> = ({ persons }) => {
         <div className="end">
           {
             !readOnly ?
-              <button type="submit">Zapisz wykluczenia</button> :
-              <button onClick={handleEdit} type="button">Edit</button>
+              <Button type="submit">Zapisz wykluczenia</Button> :
+              <Button onClick={handleEdit} type="button">Edytuj</Button>
           }
         </div>
       </form>

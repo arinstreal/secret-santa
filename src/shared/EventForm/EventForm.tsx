@@ -1,4 +1,4 @@
-import { Field, FormikProvider, useFormik } from "formik";
+import { FormikProvider, useFormik } from "formik";
 import { IEvent } from "../../interfaces/event";
 import { FC } from "react";
 import PersonsFields from "./Components/PersonsFields";
@@ -8,6 +8,7 @@ import EventFields from "./Components/EventFields";
 import useFetch from "../../hooks/useFetch";
 import { IPerson } from "../../interfaces/person";
 import Button  from "@mui/material/Button";
+import { Checkbox, FormControlLabel } from "@mui/material";
 
 const initialValues: IEvent = {
   organizerName: '',
@@ -63,10 +64,7 @@ const EventForm: FC<IEventForm> = ({ data, readOnly, isNew, handleEdit }) => {
               readOnly={readOnly}
               isNew={isNew}
             />
-            <label>
-              <Field type="checkbox" name="organizerInEvent" disabled={readOnly}/>
-              Czy organizator bierze udział w losowaniu?
-            </label>
+            <FormControlLabel name="organizerInEvent" control={<Checkbox />} label="Czy organizator bierze udział w losowaniu?" />
             <PersonsFields
               readOnly={readOnly}
               isNew={isNew}
@@ -75,7 +73,7 @@ const EventForm: FC<IEventForm> = ({ data, readOnly, isNew, handleEdit }) => {
             />
             <div className="end">
               {
-                !readOnly && <Button variant="contained" color="primary" type="submit">Submit</Button>
+                !readOnly && <Button variant="contained" color="primary" type="submit">Wyślij</Button>
               }
             </div>
           </form>
@@ -83,7 +81,7 @@ const EventForm: FC<IEventForm> = ({ data, readOnly, isNew, handleEdit }) => {
         {
           readOnly &&
             <div className="end">
-                <Button variant="contained" color="primary" onClick={handleEdit} type="button">Edit</Button>
+                <Button variant="contained" color="primary" onClick={handleEdit} type="button">Edytuj</Button>
             </div>
         }
       </>

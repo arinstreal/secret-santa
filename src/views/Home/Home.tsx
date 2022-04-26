@@ -7,13 +7,12 @@ const ids = ['5ae845d9-e0f7-4985-d343-08da118acb81', '4f253ad9-2e25-4ab6-19ae-08
 const Home = () => {
   return (
     <div>
-      <div className="card">
-        <EventForm isNew/>
-      </div>
+      <EventForm isNew/>
       {
         ids.map(id => <Link key={id} to={`event/${id}`}>Detail</Link>)
       }
-    </div>)
+    </div>
+  )
 }
 
 export default Home;

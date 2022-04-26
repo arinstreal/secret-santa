@@ -6,7 +6,6 @@ import DrawingResultsList from "./Components/DrawingResultsList";
 import { IEvent } from "../../interfaces/event";
 import EventDetails from "./Components/EventDetails";
 import { Loader } from "../../shared/Loader/Loader";
-import EventForm from "../../shared/EventForm/EventForm";
 import PersonsDetails from "./Components/PersonsDetails";
 
 const Detail = () => {

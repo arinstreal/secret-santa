@@ -5,6 +5,7 @@ import { IEvent } from "../../../interfaces/event";
 import useFetch from "../../../hooks/useFetch";
 import { IDrawingResult } from "../../../interfaces/drawingResults";
 import { useParams } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const initialValues: IEvent = {
   organizerName: '',
@@ -55,8 +56,8 @@ const EventDetails: FC<IEventDetails> = ({ eventData }) => {
         <div className="end">
           {
             !readOnly ?
-              <button type="submit">Save</button> :
-              <button onClick={handleEdit} type="button">Edit</button>
+              <Button type="submit" variant="contained">Zapisz</Button> :
+              <Button variant="outlined" onClick={handleEdit} type="button">Edytuj</Button>
           }
         </div>
       </form>
