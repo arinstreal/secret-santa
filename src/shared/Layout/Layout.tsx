@@ -14,7 +14,7 @@ const Layout = () => {
             fontFamily="Yeseva One"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            <Link href="/" underline="none" color="white">Secret Santa</Link>
+            <Link href="/secret-santa" underline="none" color="white">Secret Santa</Link>
           </Typography>
         </Toolbar>
       </AppBar>
