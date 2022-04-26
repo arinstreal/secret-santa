@@ -14,9 +14,9 @@ function App() {
       <div className="app-container">
         <Routes>
           {/*<Route path="/" element={<Layout/>}>*/}
-          <Route path="" element={<Home />} />
-          <Route path="drawing-result/:drawingId" element={<DrawingResult/>} />
-          <Route path="event/:eventId" element={<Detail/>}/>
+          <Route path="/secret-santa/" element={<Home />} />
+          <Route path="/secret-santa/drawing-result/:drawingId" element={<DrawingResult/>} />
+          <Route path="/secret-santa/event/:eventId" element={<Detail/>}/>
           <Route path="*" element={<Page404/>}/>
           {/*</Route>*/}
         </Routes>
