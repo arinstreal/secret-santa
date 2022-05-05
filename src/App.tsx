@@ -13,8 +13,8 @@ function App() {
       <Layout/>
       <div className="app-container">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="drawing-result/:drawingId" element={<DrawingResult/>} />
+          <Route path="/" element={<Home/>}/>
+          <Route path="drawing-result/:drawingId" element={<DrawingResult/>}/>
           <Route path="event/:eventId" element={<Detail/>}/>
           <Route path="*" element={<Page404/>}/>
         </Routes>
