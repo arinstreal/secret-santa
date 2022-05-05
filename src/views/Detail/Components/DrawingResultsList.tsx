@@ -36,7 +36,7 @@ const DrawingResultsList: FC = () => {
       <h2>List of drawing results</h2>
       {
         (responseData || []).map(item => <Link
-          to={`/secret-santa/drawing-result/${get(item, 'id')}`}>{get(item, 'giverName')}, </Link>)
+          to={`/drawing-result/${get(item, 'id')}`}>{get(item, 'giverName')}, </Link>)
       }
     </div>
   )

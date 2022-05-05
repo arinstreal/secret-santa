@@ -4,7 +4,7 @@ import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "react-datepicker/dist/react-datepicker.css";
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
@@ -15,10 +15,10 @@ ReactDOM.render(
   <ThemeProvider theme={theme}>
     <LocalizationProvider dateAdapter={AdapterDayjs}>
     <React.StrictMode>
-      <BrowserRouter>
+      <Router>
         <CssBaseline/>
         <App/>
-      </BrowserRouter>
+      </Router>
     </React.StrictMode>
     </LocalizationProvider>
   </ThemeProvider>,
