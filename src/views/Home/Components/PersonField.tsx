@@ -3,6 +3,7 @@ import React, { FC, useMemo, useState } from 'react';
 import { IPerson } from "../../../interfaces/person";
 import { IOption } from "../../../interfaces/option";
 import { Button, Stack, TextField } from "@mui/material";
+import styles from "./PersonField.module.scss";
 
 type PersonFieldProps = {
   person: IPerson,
@@ -35,7 +36,7 @@ const PersonField: FC<PersonFieldProps> = (
   }
 
   return (
-    <div className="w-100">
+    <div className={styles.personField}>
       <Stack direction="row" spacing={2}>
         <TextField
           id={`${prefixName}name`}

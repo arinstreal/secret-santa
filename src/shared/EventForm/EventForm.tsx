@@ -9,6 +9,7 @@ import useFetch from "../../hooks/useFetch";
 import { IPerson } from "../../interfaces/person";
 import Button from "@mui/material/Button";
 import { Checkbox, FormControlLabel } from "@mui/material";
+import styles from "./EventForm.module.scss";
 
 const initialValues: IEvent = {
   organizerName: '',
@@ -66,21 +67,25 @@ const EventForm: FC<IEventForm> = ({ data, readOnly, isNew, handleEdit }) => {
   return (
     <>
       <FormikProvider value={formik}>
-        <form onSubmit={formik.handleSubmit}>
-          <EventFields
-            readOnly={readOnly}
-            isNew={isNew}
-          />
-          <FormControlLabel
-            name="organizerInEvent" control={<Checkbox/>}
-            label="Czy organizator bierze udział w losowaniu?"
-          />
-          <PersonsFields
-            readOnly={readOnly}
-            isNew={isNew}
-            persons={formik.values.persons}
-            handleChange={formik.handleChange}
-          />
+        <form onSubmit={formik.handleSubmit} className={styles.eventForm}>
+          <div>
+            <div>
+              <EventFields
+                readOnly={readOnly}
+                isNew={isNew}
+              />
+              <FormControlLabel
+                name="organizerInEvent" control={<Checkbox/>}
+                label="Czy organizator bierze udział w losowaniu?"
+              />
+            </div>
+            <PersonsFields
+              readOnly={readOnly}
+              isNew={isNew}
+              persons={formik.values.persons}
+              handleChange={formik.handleChange}
+            />
+          </div>
           <div className="end">
             {
               !readOnly && <Button variant="contained" color="primary" type="submit">Wyślij</Button>

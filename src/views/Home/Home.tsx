@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import EventForm from "../../shared/EventForm/EventForm";
@@ -8,11 +7,7 @@ const ids = ['5ae845d9-e0f7-4985-d343-08da118acb81', '4f253ad9-2e25-4ab6-19ae-08
 const Home = () => {
   return (
     <div>
-      <Card>
-        <CardContent>
-          <EventForm isNew/>
-        </CardContent>
-      </Card>
+      <EventForm isNew/>
       {
         ids.map(id => <Link key={id} to={`event/${id}`}>Detail</Link>)
       }

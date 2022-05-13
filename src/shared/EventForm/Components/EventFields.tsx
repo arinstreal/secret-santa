@@ -29,6 +29,7 @@ const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
         disabled={readOnly || !isNew}
         fullWidth
         required
+        variant="standard"
       />
       <TextField
         id="organizerEmail"
@@ -39,6 +40,7 @@ const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
         disabled={readOnly || !isNew}
         fullWidth
         required
+        variant="standard"
       />
       <TextField
         id="name"
@@ -48,6 +50,7 @@ const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
         disabled={readOnly}
         fullWidth
         required
+        variant="standard"
       />
       <DesktopDatePicker
         label="Data zakończenia"
@@ -55,7 +58,7 @@ const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
         inputFormat="DD/MM/YYYY"
         value={values.endDate ? new Date(values.endDate!) : null}
         onChange={onHandleChangeDate}
-        renderInput={(params) => <TextField {...params} required />}
+        renderInput={(params) => <TextField  variant="standard" {...params} required />}
         disabled={readOnly}
 
       />
@@ -71,6 +74,7 @@ const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
           required
           inputProps={{
             'aria-label': 'budget',
+            'variant': 'standard'
           }}
           disabled={readOnly}
         />
@@ -82,6 +86,7 @@ const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
         value={values.message}
         disabled={readOnly}
         fullWidth
+        variant="standard"
       />
     </Stack>
   )
