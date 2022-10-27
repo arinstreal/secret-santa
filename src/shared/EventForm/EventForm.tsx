@@ -6,10 +6,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { omit } from "lodash";
 import EventFields from "./Components/EventFields";
 import useFetch from "../../hooks/useFetch";
-import { IPerson } from "../../interfaces/person";
+import { initPerson, IPerson } from "../../interfaces/person";
 import Button from "@mui/material/Button";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import { Card, CardContent, Checkbox, FormControlLabel } from "@mui/material";
 import styles from "./EventForm.module.scss";
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import * as Yup from 'yup';
 
 const initialValues: IEvent = {
   organizerName: '',
@@ -18,7 +21,7 @@ const initialValues: IEvent = {
   endDate: null,
   budget: 0,
   message: '',
-  persons: [{ name: '', email: '' }]
+  persons: [initPerson()]
 }
 
 interface IEventForm {
@@ -40,9 +43,14 @@ const EventForm: FC<IEventForm> = ({ data, readOnly, isNew, handleEdit }) => {
     url: `Events/${eventId}/Edit`
   });
 
+  const EventFormSchema = Yup.object().shape({
+    organizerEmail: Yup.string().email('Nieprawidłowy email').required('Required'),
+  });
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: { ...(data || initialValues), organizerInEvent: false },
+    validationSchema: EventFormSchema,
     onSubmit: values => {
       isNew ? onCreateNew(values) : editEvent(omit(values, 'creatingDate'));
     }
@@ -69,22 +77,30 @@ const EventForm: FC<IEventForm> = ({ data, readOnly, isNew, handleEdit }) => {
       <FormikProvider value={formik}>
         <form onSubmit={formik.handleSubmit} className={styles.eventForm}>
           <div>
-            <div>
-              <EventFields
-                readOnly={readOnly}
-                isNew={isNew}
-              />
-              <FormControlLabel
-                name="organizerInEvent" control={<Checkbox/>}
-                label="Czy organizator bierze udział w losowaniu?"
-              />
-            </div>
-            <PersonsFields
-              readOnly={readOnly}
-              isNew={isNew}
-              persons={formik.values.persons}
-              handleChange={formik.handleChange}
-            />
+            <Card className={styles.eventCard}>
+              <CardContent>
+                <EventAvailableIcon className="card-icon"/>
+                <EventFields
+                  readOnly={readOnly}
+                  isNew={isNew}
+                />
+                <FormControlLabel
+                  name="organizerInEvent" control={<Checkbox/>}
+                  label="Czy organizator bierze udział w losowaniu?"
+                />
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent>
+                <PersonAddAlt1Icon className="card-icon"/>
+                <PersonsFields
+                  readOnly={readOnly}
+                  isNew={isNew}
+                  persons={formik.values.persons}
+                  handleChange={formik.handleChange}
+                />
+              </CardContent>
+            </Card>
           </div>
           <div className="end">
             {

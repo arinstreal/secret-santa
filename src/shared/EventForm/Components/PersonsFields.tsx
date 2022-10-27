@@ -26,9 +26,6 @@ const PersonsFields: FC<IPersonsFields> = ({ persons = [], readOnly, isNew, chil
 
   return (
     <div>
-      <Typography variant="h3" gutterBottom component="div">
-        Uczestnicy
-      </Typography>
       <FieldArray
         name="persons"
         render={arrayHelpers => (

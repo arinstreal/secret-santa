@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import { get } from 'lodash';
@@ -11,11 +11,6 @@ import PersonsDetails from "./Components/PersonsDetails";
 const Detail = () => {
   let { eventId } = useParams();
   const { responseData: event, fetchResponseData } = useFetch<IEvent>({ type: 'GET', url: `Events/${eventId}` });
-  const [readOnly, setReadOnly] = useState(true);
-
-  const handleEdit = () => {
-    setReadOnly(prev => (!prev));
-  }
 
   useEffect(() => {
     fetchResponseData();

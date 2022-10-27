@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { IEvent } from "../../../interfaces/event";
 import { useFormikContext } from "formik";
-import { FormControl, InputAdornment, InputLabel, OutlinedInput, Stack, TextField, Typography } from "@mui/material";
+import { FormControl, InputAdornment, InputLabel, OutlinedInput, Stack, TextField } from "@mui/material";
 import { DesktopDatePicker } from "@mui/x-date-pickers";
 
 interface IEventFields {
@@ -10,7 +10,7 @@ interface IEventFields {
 }
 
 const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
-  const { values, handleChange, setFieldValue } = useFormikContext<IEvent>();
+  const { values, handleChange, setFieldValue, errors, touched } = useFormikContext<IEvent>();
 
   const onHandleChangeDate = (newValue: Date | null) => {
     setFieldValue('endDate', newValue);
@@ -18,9 +18,6 @@ const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
 
   return (
     <Stack spacing={2}>
-      <Typography variant="h3" gutterBottom component="div">
-        Wydarzenie
-      </Typography>
       <TextField
         id="organizerName"
         label="Organizator"
@@ -42,6 +39,7 @@ const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
         required
         variant="standard"
       />
+      {errors.organizerEmail && touched.organizerEmail ? <div>{errors.organizerEmail}</div> : null}
       <TextField
         id="name"
         label="Nazwa wydarzenia"
@@ -54,13 +52,22 @@ const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
       />
       <DesktopDatePicker
         label="Data zakończenia"
-        // name="endDate"
+        minDate={new Date()}
         inputFormat="DD/MM/YYYY"
         value={values.endDate ? new Date(values.endDate!) : null}
         onChange={onHandleChangeDate}
-        renderInput={(params) => <TextField  variant="standard" {...params} required />}
+        renderInput={(params) => <TextField variant="standard" {...params} required />}
         disabled={readOnly}
 
+      />
+      <TextField
+        id="budget"
+        label="Budżet"
+        onChange={handleChange}
+        value={values.budget}
+        fullWidth
+        required
+        variant="standard"
       />
       <FormControl variant="outlined">
         <InputLabel htmlFor="budget">Budżet</InputLabel>
@@ -82,6 +89,7 @@ const EventFields: FC<IEventFields> = ({ readOnly, isNew }) => {
       <TextField
         id="message"
         label="Wiadomość"
+        type="textarea"
         onChange={handleChange}
         value={values.message}
         disabled={readOnly}

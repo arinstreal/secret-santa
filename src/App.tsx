@@ -6,12 +6,14 @@ import Detail from "./views/Detail/Detail";
 import Page404 from "./views/404/404";
 import Layout from "./shared/Layout/Layout";
 import DrawingResult from "./views/DrawingResult/DrawingResult";
+import { Snowflakes } from "./shared/Snowflakes/Snowflakes";
 
 function App() {
   return (
     <div className="App">
       <Layout/>
       <div className="app-container">
+        <Snowflakes/>
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="drawing-result/:drawingId" element={<DrawingResult/>}/>

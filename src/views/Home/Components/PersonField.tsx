@@ -41,7 +41,7 @@ const PersonField: FC<PersonFieldProps> = (
         <TextField
           id={`${prefixName}name`}
           label="Nazwa"
-          variant="outlined"
+          variant="standard"
           onChange={onChange}
           disabled={readOnly}
           value={person.name}
@@ -55,6 +55,7 @@ const PersonField: FC<PersonFieldProps> = (
           type="email"
           disabled={readOnly}
           fullWidth
+          variant="standard"
         />
         {
           !readOnly &&
