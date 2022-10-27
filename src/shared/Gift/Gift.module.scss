@@ -91,6 +91,8 @@
     text-align: center;
     z-index: -1;
     left: 5px;
+    transform: scale(0.1);
+    width: 100%;
   }
 
   .click:checked + .click {
@@ -98,7 +100,7 @@
   }
 
   .click:checked ~ .wishes {
-    transform: translateY(-100px);
+    transform: translateY(-100px) scale(1);
   }
 
   .sparkles {

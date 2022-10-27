@@ -3,12 +3,13 @@ import useFetch from "../../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import { IDrawingResult } from "../../interfaces/drawingResults";
 import dayjs from "dayjs";
-import { FormikProvider, useFormik } from "formik";
+import { Formik } from "formik";
 import Gift from "../../shared/Gift/Gift";
 import { LoadingButton } from "@mui/lab";
 import { TextField, Typography } from "@mui/material";
 import styles from "./DrawingResult.module.scss";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { Loader } from "../../shared/Loader/Loader";
 
 dayjs.extend(relativeTime);
 
@@ -21,9 +22,9 @@ const DrawingResult: FC = () => {
   const { eventId, giverId } = drawingResult || {};
 
   const {
-    responseData: wishResult,
+    // responseData: wishResult,
     fetchResponseData: sendWish,
-    loading: loadingSendWish
+    loading: loadingSendWish,
   } = useFetch<{ wish: string }>({
     type: 'PUT',
     url: `Events/${eventId}/Persons/${giverId}/GiftWishes`
@@ -33,16 +34,7 @@ const DrawingResult: FC = () => {
     fetchResponseData();
   }, [drawingId]);
 
-  const formik = useFormik({
-    enableReinitialize: true,
-    initialValues: { wish: drawingResult?.giverGiftWishes || '' },
-    onSubmit: values => {
-      const { wish } = values;
-      console.log(values)
-      sendWish({ wish });
-    }
-  });
-
+  if (!drawingResult?.giverName) return <Loader/>;
   return (
     <div className={styles.drawingResult}>
       <Typography
@@ -51,8 +43,10 @@ const DrawingResult: FC = () => {
         {drawingResult?.eventName}
       </Typography>
       <div className="card">
-        <Typography variant="h4" gutterBottom component="div" align="center" marginTop="24px"
-                    fontFamily="GreatVibes Regular">
+        <Typography
+          variant="h4" gutterBottom component="div" align="center" marginTop="24px"
+          fontFamily="GreatVibes Regular"
+        >
           Witaj {drawingResult?.giverName}!
         </Typography>
         <Gift person={drawingResult?.recipientName}/>
@@ -63,32 +57,46 @@ const DrawingResult: FC = () => {
             <div><b>Wymarzone prezenty:</b> {drawingResult?.recipientGiftWishes}</div>
         }
         <div className="mt-4"><b>Budżet:</b> {drawingResult?.budget}zł</div>
-        <div className="mt-4">{drawingResult?.message}</div>
+        <Typography variant="body1" gutterBottom component="div" textAlign="justify" marginBottom="12px">
+          {drawingResult?.message}
+        </Typography>
 
         <div className={styles.wishesWrapper}>
-          <FormikProvider value={formik}>
-            <form onSubmit={formik.handleSubmit}>
-              <TextField
-                id="wish"
-                label="Twoje wymarzone prezenty"
-                onChange={formik.handleChange}
-                value={formik.values.wish}
-                fullWidth
-                required
-                type="textarea"
-              />
-              <div className={styles.buttonWrapper}>
-                <LoadingButton
-                  loading={loadingSendWish}
-                  variant="outlined"
-                  color="error"
-                  disabled={!formik.dirty || !formik.touched}
-                  type="submit">
-                  Zapisz
-                </LoadingButton>
-              </div>
-            </form>
-          </FormikProvider>
+          <Formik
+            enableReinitialize={false}
+            initialValues={{ wish: drawingResult?.giverGiftWishes || '' }}
+            onSubmit={(formValues, formikBag) => {
+              const { wish } = formValues;
+              sendWish({ wish });
+              formikBag.resetForm({ values: formValues });
+            }}
+          >
+            {
+              formik => (
+                <form onSubmit={formik.handleSubmit}>
+                  <TextField
+                    id="wish"
+                    label="Twoje wymarzone prezenty"
+                    onChange={formik.handleChange}
+                    value={formik.values.wish}
+                    fullWidth
+                    type="textarea"
+                  />
+                  <div className={styles.buttonWrapper}>
+                    <LoadingButton
+                      loading={loadingSendWish}
+                      variant="outlined"
+                      color="error"
+                      disabled={!formik.dirty}
+                      type="submit">
+                      Zapisz
+                    </LoadingButton>
+                  </div>
+                </form>
+
+              )
+            }
+          </Formik>
         </div>
       </div>
     </div>
