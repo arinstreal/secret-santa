@@ -7,7 +7,9 @@ import { FormikProvider, useFormik } from "formik";
 import Gift from "../../shared/Gift/Gift";
 import { LoadingButton } from "@mui/lab";
 import { TextField, Typography } from "@mui/material";
+import styles from "./DrawingResult.module.scss";
 import relativeTime from "dayjs/plugin/relativeTime";
+
 dayjs.extend(relativeTime);
 
 const DrawingResult: FC = () => {
@@ -42,15 +44,14 @@ const DrawingResult: FC = () => {
   });
 
   return (
-    <div>
-      <Typography variant="h5" gutterBottom component="div" align="left">
+    <div className={styles.drawingResult}>
+      <Typography variant="h5" component="div" align="left">
         {drawingResult?.eventName}
       </Typography>
-      <Typography variant="subtitle2" gutterBottom component="div" align="left">
-        Dzień wymiany prezentami {drawingResult?.endDate && dayjs(drawingResult?.endDate).format('DD.MM.YYYY')}
-        {/*{dayjs(drawingResult?.endDate).fromNow()}*/}
+      <Typography variant="body2" gutterBottom component="div" align="left">
+        Dzień wymiany prezentami: {drawingResult?.endDate && dayjs(drawingResult?.endDate).format('DD.MM.YYYY')}
       </Typography>
-      <Typography variant="h3" gutterBottom component="div" align="center">
+      <Typography variant="h4" gutterBottom component="div" align="center">
         Witaj {drawingResult?.giverName}!
       </Typography>
       <Typography variant="subtitle1" gutterBottom component="div" align="center">
@@ -58,34 +59,35 @@ const DrawingResult: FC = () => {
       </Typography>
       <div className="card">
         <Gift person={drawingResult?.recipientName}/>
-        <div>Wymarzone prezenty: {drawingResult?.recipientGiftWishes}</div>
+        <div><b>Wymarzone prezenty:</b> {drawingResult?.recipientGiftWishes}</div>
+        <div className="mt-4"><b>Budżet:</b> {drawingResult?.budget}zł</div>
+        <div className="mt-4"><b>Wiadomość:</b> {drawingResult?.message}</div>
 
-        <div>Budżet: {drawingResult?.budget}</div>
-        <div>Wiadomość: {drawingResult?.message}</div>
+        <div className={styles.wishesWrapper}>
+          <FormikProvider value={formik}>
+            <form onSubmit={formik.handleSubmit}>
+              <TextField
+                id="wish"
+                label="Twoje wymarzone prezenty"
+                onChange={formik.handleChange}
+                value={formik.values.wish}
+                fullWidth
+                required
+                type="textarea"
+              />
+              <div className={styles.buttonWrapper}>
+                <LoadingButton
+                  loading={loadingSendWish}
+                  variant="outlined"
+                  color="error"
+                  type="submit">
+                  Save
+                </LoadingButton>
+              </div>
+            </form>
+          </FormikProvider>
+        </div>
       </div>
-      <div className="card">
-        <FormikProvider value={formik}>
-          <form onSubmit={formik.handleSubmit}>
-            <TextField
-              id="wish"
-              label="Twoje wymarzone prezenty"
-              onChange={formik.handleChange}
-              value={formik.values.wish}
-              fullWidth
-              required
-              type="textarea"
-            />
-            <LoadingButton
-              loading={loadingSendWish}
-              variant="outlined"
-              type="submit">
-              Save
-            </LoadingButton>
-            {/*<LoadingButton type="sumbit" text="Wyślij" isLoading={loadingSendWish}/>*/}
-          </form>
-        </FormikProvider>
-      </div>
-
     </div>
   )
 }

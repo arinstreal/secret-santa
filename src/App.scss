@@ -14,17 +14,15 @@
 
 .App {
   position: relative;
-  //background-color: #f9f9f9;
   min-height: 100vh;
-  //&:before {
-  //  position: absolute;
-  //  content: '';
-  //  display: block;
-  //  box-sizing: border-box;
-  //  height: 500px;
-  //  width: 100%;
-  //  //background-color: #66799d;
-  //  clip-path: ellipse(69% 100% at 54.37% 0%);
-  //  z-index: -1;
-  //}
+
+  .bg {
+    background: radial-gradient(ellipse at bottom, var(--blue-20) 0%, var(--blue-80) 100%);
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
 }

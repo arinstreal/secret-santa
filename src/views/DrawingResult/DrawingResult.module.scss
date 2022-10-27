@@ -1,0 +1,24 @@
+.drawingResult {
+  margin-top: 24px;
+  padding-bottom: 24px;
+
+  .wishesWrapper {
+    margin-top: 32px;
+    margin-bottom: 12px;
+
+    .buttonWrapper {
+      text-align: right;
+
+      button {
+        margin-top: 16px;
+        min-width: 20%;
+      }
+
+      @media (max-width: 400px) {
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
