@@ -1,4 +1,4 @@
-import { Link, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import React from "react";
 import styles from "./Layout.module.scss";
 
@@ -9,11 +9,13 @@ const Layout = () => {
       noWrap
       component="div"
       align="center"
+      sx={{flexGrow: 1, typography: { xs: "h2", md: 'h1'},display: { sm: 'block' } }}
       fontFamily="GreatVibes Regular"
-      sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
       className={styles.layout}
+      color="white"
     >
-      <Link href={process.env.PUBLIC_URL} underline="none" color="white">Secret Santa</Link>
+      Secret Santa
+      {/*<Link href={process.env.PUBLIC_URL} underline="none" color="white">Secret Santa</Link>*/}
     </Typography>
   )
 }

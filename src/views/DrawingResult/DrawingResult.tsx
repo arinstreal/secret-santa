@@ -45,23 +45,25 @@ const DrawingResult: FC = () => {
 
   return (
     <div className={styles.drawingResult}>
-      <Typography variant="h5" component="div" align="left">
+      <Typography
+        variant="h4" component="div" align="center" color="white" fontFamily="GreatVibes Regular"
+        marginBottom="4px">
         {drawingResult?.eventName}
       </Typography>
-      <Typography variant="body2" gutterBottom component="div" align="left">
-        Dzień wymiany prezentami: {drawingResult?.endDate && dayjs(drawingResult?.endDate).format('DD.MM.YYYY')}
-      </Typography>
-      <Typography variant="h4" gutterBottom component="div" align="center">
-        Witaj {drawingResult?.giverName}!
-      </Typography>
-      <Typography variant="subtitle1" gutterBottom component="div" align="center">
-        Otwórz prezent, aby sprawdzić kogo wylosowałeś/aś
-      </Typography>
       <div className="card">
+        <Typography variant="h4" gutterBottom component="div" align="center" marginTop="24px"
+                    fontFamily="GreatVibes Regular">
+          Witaj {drawingResult?.giverName}!
+        </Typography>
         <Gift person={drawingResult?.recipientName}/>
-        <div><b>Wymarzone prezenty:</b> {drawingResult?.recipientGiftWishes}</div>
+        <Typography variant="body2" gutterBottom component="div" align="center" marginBottom="12px" color="gray">
+          Dotknij wieczka, aby sprawdzić kogo wylosowałeś/aś
+        </Typography>
+        {drawingResult?.recipientGiftWishes &&
+            <div><b>Wymarzone prezenty:</b> {drawingResult?.recipientGiftWishes}</div>
+        }
         <div className="mt-4"><b>Budżet:</b> {drawingResult?.budget}zł</div>
-        <div className="mt-4"><b>Wiadomość:</b> {drawingResult?.message}</div>
+        <div className="mt-4">{drawingResult?.message}</div>
 
         <div className={styles.wishesWrapper}>
           <FormikProvider value={formik}>
@@ -80,8 +82,9 @@ const DrawingResult: FC = () => {
                   loading={loadingSendWish}
                   variant="outlined"
                   color="error"
+                  disabled={!formik.dirty || !formik.touched}
                   type="submit">
-                  Save
+                  Zapisz
                 </LoadingButton>
               </div>
             </form>
