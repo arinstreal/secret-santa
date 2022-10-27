@@ -39,7 +39,7 @@ const DrawingResult: FC = () => {
     <div className={styles.drawingResult}>
       <Typography
         variant="h4" component="div" align="center" color="white" fontFamily="GreatVibes Regular"
-        marginBottom="4px">
+        marginBottom="12px">
         {drawingResult?.eventName}
       </Typography>
       <div className="card">
@@ -54,12 +54,15 @@ const DrawingResult: FC = () => {
           Dotknij wieczka, aby sprawdzić kogo wylosowałeś/aś
         </Typography>
         {drawingResult?.recipientGiftWishes &&
-            <div><b>Wymarzone prezenty:</b> {drawingResult?.recipientGiftWishes}</div>
+            <div className="mb-2"><b>Wymarzone prezenty:</b> <br/> {drawingResult?.recipientGiftWishes}</div>
         }
-        <div className="mt-4"><b>Budżet:</b> {drawingResult?.budget}zł</div>
-        <Typography variant="body1" gutterBottom component="div" textAlign="justify" marginBottom="12px">
-          {drawingResult?.message}
-        </Typography>
+        <div className="mt-4 mb-2"><b>Budżet:</b> {drawingResult?.budget}zł</div>
+        {
+          drawingResult?.message &&
+            <Typography variant="body1" gutterBottom component="div" textAlign="justify" marginBottom="12px">
+            {drawingResult?.message}
+          </Typography>
+        }
 
         <div className={styles.wishesWrapper}>
           <Formik
@@ -76,10 +79,11 @@ const DrawingResult: FC = () => {
                 <form onSubmit={formik.handleSubmit}>
                   <TextField
                     id="wish"
-                    label="Twoje wymarzone prezenty"
+                    label="List do Mikołaja"
                     onChange={formik.handleChange}
                     value={formik.values.wish}
                     fullWidth
+                    multiline
                     type="textarea"
                   />
                   <div className={styles.buttonWrapper}>
@@ -89,7 +93,7 @@ const DrawingResult: FC = () => {
                       color="error"
                       disabled={!formik.dirty}
                       type="submit">
-                      Zapisz
+                      Wyślij
                     </LoadingButton>
                   </div>
                 </form>
