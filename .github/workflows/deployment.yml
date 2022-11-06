@@ -12,7 +12,7 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
       - name: Install packages
-        run: pnpm install --prod --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Build
         run:
           pnpm run build
