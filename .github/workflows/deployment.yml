@@ -2,7 +2,7 @@ name: Secret Santa Deploy
 on:
   push:
     branches:
-      - main
+      - secret_santa_actions
 jobs:
   deployment:
     runs-on: ubuntu-latest
