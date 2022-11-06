@@ -32,7 +32,7 @@ const DrawingResult: FC = () => {
 
   useEffect(() => {
     fetchResponseData();
-  }, [drawingId]);
+  }, [drawingId, fetchResponseData]);
 
   if (!drawingResult?.giverName) return <Loader/>;
   return (

@@ -30,7 +30,7 @@ const PersonField: FC<PersonFieldProps> = (
   const personsOptions = useMemo<IOption[]>(() => (persons?.filter(item => item.id !== person.id) || []).map(item => ({
     value: item.id,
     label: item.name
-  })), [persons]);
+  })), [persons, person?.id]);
   const handleAddExclusion = () => {
     setOpenExclusion(prev => (!prev));
   }

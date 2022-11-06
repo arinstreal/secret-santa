@@ -6,9 +6,12 @@ import { IDrawingResult } from "../../../interfaces/drawingResults";
 
 const DrawingResultsList: FC = () => {
   let { eventId } = useParams();
-  const { fetchResponseData, responseData } = useFetch<IDrawingResult[]>({ type: 'GET', url: `Events/${eventId}/DrawingResults` });
+  const { fetchResponseData, responseData } = useFetch<IDrawingResult[]>({
+    type: 'GET',
+    url: `Events/${eventId}/DrawingResults`
+  });
 
-  function handleDraw(){
+  function handleDraw() {
     fetchResponseData();
     const requestOptions = {
       method: 'POST',
@@ -24,14 +27,14 @@ const DrawingResultsList: FC = () => {
 
   useEffect(() => {
     if (eventId) fetchResponseData()
-  }, [eventId]);
+  }, [eventId, fetchResponseData]);
 
   if (!responseData?.[0]) return (
     <div>
       <button onClick={handleDraw}>Losuj</button>
     </div>
   )
- else return (
+  else return (
     <div>
       <h2>List of drawing results</h2>
       {
