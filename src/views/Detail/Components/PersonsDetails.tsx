@@ -13,7 +13,7 @@ interface IPersonsDetails {
 const PersonsDetails: FC<IPersonsDetails> = ({ persons }) => {
   let { eventId } = useParams();
   const [readOnly, setReadOnly] = useState(true);
-  const { fetchResponseData: saveExclusions, success } = useFetch<IPerson[]>({
+  const { success } = useFetch<IPerson[]>({
     type: 'PUT',
     url: `Events/${eventId}/Exclusions`
   });
@@ -26,9 +26,7 @@ const PersonsDetails: FC<IPersonsDetails> = ({ persons }) => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: { persons: [...persons || initPerson()] },
-    onSubmit: values => {
-      // const { name, endDate, budget, message } = values;
-    }
+    onSubmit: () => {}
   });
 
   useEffect(() => {

@@ -3,7 +3,7 @@ import PersonField from "../../../views/Home/Components/PersonField";
 import React, { ChangeEvent, FC, ReactChildren } from "react";
 import { initPerson, IPerson } from "../../../interfaces/person";
 import { IEvent } from "../../../interfaces/event";
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 
 interface IPersonsFields {
   readOnly?: boolean;
