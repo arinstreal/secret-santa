@@ -32,7 +32,7 @@ const DrawingResult: FC = () => {
 
   useEffect(() => {
     fetchResponseData();
-  }, [drawingId]);
+  }, [drawingId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!drawingResult?.giverName) return <Loader/>;
   return (

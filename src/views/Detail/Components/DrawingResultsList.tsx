@@ -27,7 +27,7 @@ const DrawingResultsList: FC = () => {
 
   useEffect(() => {
     if (eventId) fetchResponseData()
-  }, [eventId]);
+  }, [eventId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!responseData?.[0]) return (
     <div>
