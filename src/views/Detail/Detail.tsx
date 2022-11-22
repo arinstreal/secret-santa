@@ -14,7 +14,7 @@ const Detail = () => {
 
   useEffect(() => {
     fetchResponseData();
-  }, [eventId, fetchResponseData]);
+  }, [eventId]);
 
   return (
     <div className="card">

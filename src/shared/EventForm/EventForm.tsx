@@ -70,7 +70,7 @@ const EventForm: FC<IEventForm> = ({ data, readOnly, isNew, handleEdit }) => {
     if (success && event?.id) {
       navigate(`event/${event.id}`);
     }
-  }, [success, event, navigate]);
+  }, [success, event?.id]);
 
   return (
     <>

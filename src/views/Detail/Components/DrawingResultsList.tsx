@@ -27,7 +27,7 @@ const DrawingResultsList: FC = () => {
 
   useEffect(() => {
     if (eventId) fetchResponseData()
-  }, [eventId, fetchResponseData]);
+  }, [eventId]);
 
   if (!responseData?.[0]) return (
     <div>
