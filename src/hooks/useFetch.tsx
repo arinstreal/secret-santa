@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const API = 'https://webapp-220201114916.azurewebsites.net/';
+const API = 'https://app-giftgivinggenerator-prod-poland.azurewebsites.net';
 
 interface IUseFetch {
   type: 'GET' | 'PUT' | 'POST',
